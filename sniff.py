@@ -11,7 +11,7 @@ def get_args():
         (value, args) = parser.parse_args()
     except:
         parser = argparse.ArgumentParser()
-        parser.add_option("-i", "--interface", dest="iface", help="Interface to be sniffed.")
+        parser.add_arguments("-i", "--interface", dest="iface", help="Interface to be sniffed.")
         value = parser.parse_args()
     if not value.iface:
         parser.error("[-] ERROR Missing Interface name, use --help for more info.")
